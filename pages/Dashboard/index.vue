@@ -1,218 +1,208 @@
 <template>
-  <v-main class="grey lighten-4">
-    <header>
-      <v-row class="ma-5">
-        <v-toolbar-title
-          class="font-weight-light">
-          Dashboard
-        </v-toolbar-title>
+
+  <v-container
+    style="height: 3000px"
+    id="dashboard"
+    tag="section"
+    class="col-12">
+
+    <!--  sparkline  sheets -->
+    <v-row class="mb-1">
+      <v-col cols="12" md="6" lg="4" class="px-8 px-md-4">
+        <v-card
+          class="mx-auto pt-2"
+          height="">
+
+          <v-sheet
+            class="mx-auto orange lighten-5"
+            elevation="6"
+            max-width="calc(100% - 32px)"
+          >
+            <v-sparkline
+              smooth="4"
+              :labels="labels"
+              :value="value"
+              color="orange"
+              line-width="2"
+              padding="16"
+              class="mt-2"
+            />
+          </v-sheet>
+
+          <v-card-text class="pt-0 mt-2">
+            <div class="text-h6 font-weight-light mb-1">
+              User Registrations
+            </div>
+            <div class="subheading font-weight-light grey--text">
+              Last Campaign Performance
+            </div>
+            <v-divider class="my-1" />
+            <v-icon class="mr-2"
+                    small>mdi-clock
+            </v-icon>
+            <span class="text-caption grey--text font-weight-light">last registration 26 minutes ago</span>
+          </v-card-text>
+
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="4" class="px-8 px-md-4">
+        <v-card
+          class="mx-auto pt-2"
+          height="">
+
+          <v-sheet
+            class="mx-auto cyan lighten-5"
+            elevation="6"
+            max-width="calc(100% - 32px)"
+          >
+            <v-sparkline
+              smooth="4"
+              :labels="labels"
+              :value="value"
+              color="cyan"
+              line-width="2"
+              padding="16"
+              class="mt-2"
+            />
+          </v-sheet>
+
+          <v-card-text class="pt-0 mt-2">
+            <div class="text-h6 font-weight-light mb-1">
+              User Registrations
+            </div>
+            <div class="subheading font-weight-light grey--text">
+              Last Campaign Performance
+            </div>
+            <v-divider class="my-1" />
+            <v-icon class="mr-2"
+                    small>mdi-clock
+            </v-icon>
+            <span class="text-caption grey--text font-weight-light">last registration 26 minutes ago</span>
+          </v-card-text>
+
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-divider class="my-2" />
+
+    <!--  Key Indicator -->
+    <div>
+      <!--   Indicator Selector    -->
+      <v-row no-gutters class="my-1">
+        <v-subheader class="text-body-1 text-capitalize">
+          Key Indicators
+        </v-subheader>
         <v-spacer />
-        <v-btn
-          color="primary"
-          small
-          elevation="2"
-          outlined
-        >Add an employee
+        <v-col cols="3" style="height: 0">
+          <v-select
+            :items="keyIndicatorsOptions"
+            v-model="indicatorSelected"
+            label="Select"
+            prepend-icon="mdi-calendar"
+            solo />
+        </v-col>
+        <v-btn icon class="mx-2 align-end">
+          <v-icon>
+            mdi-dots-horizontal
+          </v-icon>
         </v-btn>
       </v-row>
-      <v-divider />
-    </header>
 
-    <v-container style="height: 3000px"
-                 id="dashboard"
-                 tag="section"
-                 class="col-12"
-    >
-      <v-row class="mb-1">
-        <v-col cols="12" md="6" lg="4" class="px-8 px-md-4">
-          <v-card
-            class="mx-auto pt-2"
-            height="">
+      <!-- Indicator Sheets -->
+      <v-row class="my-2">
+        <v-col cols="6" md="3" v-for="item in keyIndicatorsData" :key="item.color">
 
-            <v-sheet
-              class="mx-auto orange lighten-5"
-              elevation="6"
-              max-width="calc(100% - 32px)"
-            >
-              <v-sparkline
-                smooth="4"
-                :labels="labels"
-                :value="value"
-                color="orange"
-                line-width="2"
-                padding="16"
-                class="mt-2"
-              />
-            </v-sheet>
+          <v-sheet
+            elevation="2"
+            class="d-flex flex-column pa-5 rounded-lg lighten-5"
+            :class="[item.color, item.color+'--text']"
+          >
+            <span class="text-body-2"> {{ item.text }} </span>
+            <span class="my-3 text-h4 font-weight-bold"> {{ item.number }} </span>
+          </v-sheet>
 
-            <v-card-text class="pt-0 mt-2">
-              <div class="text-h6 font-weight-light mb-1">
-                User Registrations
-              </div>
-              <div class="subheading font-weight-light grey--text">
-                Last Campaign Performance
-              </div>
-              <v-divider class="my-1" />
-              <v-icon class="mr-2"
-                      small>mdi-clock
-              </v-icon>
-              <span class="text-caption grey--text font-weight-light">last registration 26 minutes ago</span>
-            </v-card-text>
-
-          </v-card>
-        </v-col>
-        <v-col cols="12" md="6" lg="4" class="px-8 px-md-4">
-          <v-card
-            class="mx-auto pt-2"
-            height="">
-
-            <v-sheet
-              class="mx-auto cyan lighten-5"
-              elevation="6"
-              max-width="calc(100% - 32px)"
-            >
-              <v-sparkline
-                smooth="4"
-                :labels="labels"
-                :value="value"
-                color="cyan"
-                line-width="2"
-                padding="16"
-                class="mt-2"
-              />
-            </v-sheet>
-
-            <v-card-text class="pt-0 mt-2">
-              <div class="text-h6 font-weight-light mb-1">
-                User Registrations
-              </div>
-              <div class="subheading font-weight-light grey--text">
-                Last Campaign Performance
-              </div>
-              <v-divider class="my-1" />
-              <v-icon class="mr-2"
-                      small>mdi-clock
-              </v-icon>
-              <span class="text-caption grey--text font-weight-light">last registration 26 minutes ago</span>
-            </v-card-text>
-
-          </v-card>
         </v-col>
       </v-row>
+    </div>
 
-      <v-divider class="my-2" />
+    <v-divider class="my-2" />
 
-      <div>
-        <v-row no-gutters class="my-1">
-          <v-subheader class="text-body-2">
-            Key Indicators
-          </v-subheader>
-          <v-spacer />
-          <v-col cols="3" style="height: 0">
-            <v-select
-              :items="keyIndicatorsOptions"
-              v-model="indicatorSelected"
-              label="Select"
-              prepend-icon="mdi-calendar"
-              solo />
-          </v-col>
-          <v-btn icon class="mx-2 align-end">
-            <v-icon>
-              mdi-dots-horizontal
-            </v-icon>
-          </v-btn>
-        </v-row>
-        <v-row class="my-2">
-          <v-col cols="6" md="3" v-for="item in keyIndicatorsData" key="n">
-            <v-sheet elevation="2" class="d-flex flex-column pa-5 rounded-lg lighten-5"
-                     :class="[item.color, item.color+'--text']">
-                  <span class="text-body-2">
-                    {{ item.text }}
-                    </span>
-              <span class="my-3 text-h4 font-weight-bold">
-                    {{ item.number }}
-                  </span>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </div>
+    <!--  Charts  -->
+    <v-row height="600">
+      <!--   Cases (Bar) Chart   -->
+      <v-col cols="12" lg="8">
+        <v-card height="100%">
+          <v-container height="100%" tag="section">
+            <!--  Bar Chart Selector  -->
+            <v-row no-gutters>
+              <v-subheader class="text-body-1 text-capitalize">
+                Cases
+              </v-subheader>
+              <v-spacer />
+              <v-col cols="3" md="4" style="height: 0">
+                <v-select
+                  :items="keyIndicatorsOptions"
+                  v-model="indicatorSelected"
+                  label="Select"
+                  prepend-icon="mdi-calendar"
+                  solo />
+              </v-col>
+              <v-btn icon class="mx-2 align-end">
+                <v-icon>
+                  mdi-dots-horizontal
+                </v-icon>
+              </v-btn>
+            </v-row>
 
-      <v-divider class="my-2" />
+            <apexcharts
+              type="bar"
+              :options="casesChartOptions"
+              :series="casesChartSeries" />
+          </v-container>
+        </v-card>
+      </v-col>
 
-      <v-row>
-        <v-col cols="12" md="8">
-          <v-card>
-            <v-container class="px-0" tag="section">
-              <v-row no-gutters>
-                <v-subheader class="text-body-2">
-                  Cases
-                </v-subheader>
-                <v-spacer />
-                <v-col cols="3" md="4" style="height: 0">
-                  <v-select
-                    :items="keyIndicatorsOptions"
-                    v-model="indicatorSelected"
-                    label="Select"
-                    prepend-icon="mdi-calendar"
-                    solo />
-                </v-col>
-                <v-btn icon class="mx-2 align-end">
-                  <v-icon>
-                    mdi-dots-horizontal
-                  </v-icon>
-                </v-btn>
-              </v-row>
+      <!--   Performance (Circular) Chart   -->
+      <v-col cols="12" lg="4">
+        <v-card height="100%">
+          <v-container class="px-0 d-flex flex-column" style="height: 100%" tag="section">
 
-              <apexcharts width="100%" type="bar" height="350" :options="chartOptions" :series="series" />
+            <!--  Circular Chart Selector  -->
+            <v-row no-gutters class="flex-grow-0">
+              <v-subheader
+                class="text-body-1 text-capitalize ">
+                Performance
+              </v-subheader>
+              <v-spacer />
 
+              <v-col cols="3" md="5" style="height: 0">
+                <v-select
+                  :items="keyIndicatorsOptions"
+                  v-model="indicatorSelected"
+                  label="Select"
+                  prepend-icon="mdi-calendar"
+                  solo />
+              </v-col>
 
-            </v-container>
-          </v-card>
-        </v-col>
+              <v-btn icon class="mx-2 align-end">
+                <v-icon> mdi-dots-horizontal</v-icon>
+              </v-btn>
+            </v-row>
 
-        <v-col cols="12" md="4">
-          <v-card>
-            <v-container class="px-0" tag="section">
-              <v-row no-gutters>
-                <v-subheader class="text-body-2">
-                  Performance
-                </v-subheader>
-                <v-spacer />
-                <v-col cols="3" md="5" style="height: 0">
-                  <v-select
-                    :items="keyIndicatorsOptions"
-                    v-model="indicatorSelected"
-                    label="Select"
-                    prepend-icon="mdi-calendar"
-                    solo />
-                </v-col>
-                <v-btn icon class="mx-2 align-end">
-                  <v-icon>
-                    mdi-dots-horizontal
-                  </v-icon>
-                </v-btn>
-              </v-row>
+            <apexcharts
+              class="mx-auto my-auto"
+              type="radialBar"
+              :options="performanceChartOptions"
+              :series="performanceChartSeries" />
 
-              <div class="d-flex justify-center align-center">
-                <v-progress-circular
-                  :size="150"
-                  :width="15"
-                  :value="93"
-                  color="teal"
-                >
-                  93%
-                </v-progress-circular>
-              </div>
-            </v-container>
-          </v-card>
-        </v-col>
-      </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
 
+  </v-container>
 
-    </v-container>
-
-
-  </v-main>
 </template>
 
 <script>
@@ -220,36 +210,28 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      series: [
+      casesChartSeries: [
         {
           name: 'Net Profit',
           data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-        }, {
+        },
+        {
           name: 'Revenue',
           data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-        }, {
+        },
+        {
           name: 'Free Cash Flow',
           data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-        }],
-      chartOptions: {
+        }
+      ],
+      casesChartOptions: {
         chart: {
           type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
+          height: 300,
+          width: '100%',
+          toolbar: {
+            show: false
           }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
         },
         xaxis: {
           categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
@@ -259,15 +241,84 @@ export default {
             text: '$ (thousands)'
           }
         },
-        fill: {
-          opacity: 1
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '60%'
+          }
         },
-        tooltip: {
-          y: {
-            formatter: function(val) {
-              return '$ ' + val + ' thousands';
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        dataLabels: {
+          enabled: false
+        }
+      },
+      performanceChartSeries: [89],
+      performanceChartOptions: {
+        chart: {
+          type: 'radialBar',
+          sparkline: {
+            enabled: true
+          }
+        },
+        plotOptions: {
+          radialBar: {
+            startAngle: -110,
+            endAngle: 110,
+            track: {
+              background: 'rgba(213,213,213,0.6)',
+              startAngle: -110,
+              endAngle: 110
+            },
+            hollow: {
+              margin: 0,
+              size: '75%'
+            },
+            dataLabels: {
+              name: {
+                show: false
+              },
+              value: {
+                offsetY: -5,
+                fontSize: '2.75rem',
+                show: true
+              }
             }
           }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            type: 'horizontal',
+            colorStops: [
+              {
+                offset: 0,
+                color: 'red',
+                opacity: 0.75
+              },
+              {
+                offset: 20,
+                color: 'orange',
+                opacity: 1
+              },
+              {
+                offset: 50,
+                color: 'yellow',
+                opacity: 1
+              },
+              {
+                offset: 100,
+                color: 'green',
+                opacity: 0.65
+              }
+            ]
+          }
+        },
+        stroke: {
+          lineCap: 'round'
         }
       },
       indicatorSelected: '',
@@ -326,6 +377,23 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.casesChartOptions = {
+      ...this.casesChartOptions,
+      chart: {
+        ...this.casesChartOptions.chart,
+        height: 400,
+        width: '100%'
+      }
+    };
+
+    this.performanceChartOptions = {
+      ...this.performanceChartOptions,
+      chart: {
+        ...this.performanceChartOptions.chart
+      }
+    };
+  }
 };
 </script>
 
