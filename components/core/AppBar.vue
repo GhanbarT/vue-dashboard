@@ -82,6 +82,9 @@
 
       </v-menu>
 
+      <!--  user Account Button    -->
+      <!--  if user not If the user was not logged in:
+              show Authentication Modal   -->
       <v-btn
         class="ml-2"
         depressed

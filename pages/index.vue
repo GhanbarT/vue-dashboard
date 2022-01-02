@@ -1,12 +1,13 @@
 <template>
   <div>
-    fdgddggd
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'index',
+  layout: 'home'
 };
 </script>
 
