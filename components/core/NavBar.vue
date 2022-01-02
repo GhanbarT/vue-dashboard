@@ -1,11 +1,12 @@
 <template>
   <v-navigation-drawer
+    v-model="drawer"
     id="core-navigation-drawer"
-    mobile-breakpoint="960"
     app
-    width="264"
-  >
+    mobile-breakpoint="960"
+    width="264">
 
+    <!-- Navbar Top (Header)   -->
     <template v-slot:prepend>
       <v-list-item two-line>
         <v-list-item-avatar size="64">
@@ -22,27 +23,36 @@
 
     </template>
 
-
-    <v-list dense>
+    <!--  Navbar Center -->
+    <v-list
+      nav
+      dense>
       <v-list-item-group
-        v-model="groupItems.selectedItem"
+        v-model="selectedItem"
         mandatory
-        color="primary"
-      >
-        <v-list-item class="pt-1 pb-1"
-                     v-for="item in groupItems.items"
-                     :key="item.title">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        color="primary">
+
+        <NuxtLink
+          v-for="(item, index) in groupItems.items"
+          :key="index"
+          :to="item.to">
+          <v-list-item
+            class="pt-1 pb-1"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </NuxtLink>
+
       </v-list-item-group>
     </v-list>
 
-
+    <!-- Navbar Bottom (Footer) -->
     <template v-slot:append>
       <v-divider />
 
@@ -76,6 +86,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'DashboardCoreNavBar',
   methods: {
@@ -96,22 +108,50 @@ export default {
   },
   data() {
     return {
-      drawer: true,
       mini: true,
       user: {
         name: null,
         username: null,
         pic: null
       },
+
       groupItems: {
-        selectedItem: 0
-        , items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard-outline' },
-          { title: 'Tasks', icon: 'mdi-check-circle-outline' },
-          { title: 'Calendar', icon: 'mdi-calendar-blank-outline' },
-          { title: 'Customers', icon: 'mdi-account-multiple' },
-          { title: 'Request', icon: 'mdi-note-edit-outline' },
-          { title: 'Leads', icon: 'mdi-account-multiple-plus' }
+        items: [
+          {
+            title: 'Dashboard',
+            icon: 'mdi-view-dashboard-outline',
+            to: '/dashboard'
+          },
+          {
+            title: 'Employees',
+            icon: 'mdi-folder-account-outline',
+            to: '/dashboard/employees'
+          },
+          {
+            title: 'Tasks',
+            icon: 'mdi-check-circle-outline',
+            to: '/'
+          },
+          {
+            title: 'Calendar',
+            icon: 'mdi-calendar-blank-outline',
+            to: '/'
+          },
+          {
+            title: 'Customers',
+            icon: 'mdi-account-multiple',
+            to: '/'
+          },
+          {
+            title: 'Request',
+            icon: 'mdi-note-edit-outline',
+            to: '/'
+          },
+          {
+            title: 'Leads',
+            icon: 'mdi-account-multiple-plus',
+            to: '/'
+          }
         ]
       },
       otherPageItems: {
@@ -123,6 +163,24 @@ export default {
       logoutItem: { title: 'Logout', icon: 'mdi-logout-variant' }
     };
   },
+  computed: {
+    drawer: {
+      get() {
+        return this.$store.state.navDrawer;
+      },
+      set(val) {
+        this.$store.commit('setDrawer', val);
+      }
+    },
+    selectedItem: {
+      get() {
+        return this.$store.state.selectedDrawerItem;
+      },
+      set(val) {
+        this.$store.commit('setSelectedDrawerItem', val);
+      }
+    }
+  },
   created() {
     this.fetchData();
   }
@@ -130,5 +188,7 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  text-decoration: none;
+}
 </style>

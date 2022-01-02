@@ -2,7 +2,7 @@
   <v-footer
     light
     padless
-    class="mt-auto"
+    absolute
   >
     <v-card
       flat
@@ -44,7 +44,7 @@
         vitae?
       </v-card-text>
 
-      <v-divider/>
+      <v-divider />
 
       <v-card-text class="white--text">
         {{ new Date().getFullYear() }} — <strong>Uchiha</strong>

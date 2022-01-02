@@ -11,6 +11,7 @@
       height="64"
     >
 
+      <!--  Navbar Toggle Button  -->
       <v-btn
         class="mr-3"
         elevation="1"
@@ -18,30 +19,28 @@
         small
         @click="onClickNavBtn"
       >
-        <v-icon v-if="navOpen">
+        <v-icon v-if="navDrawer">
           mdi-chevron-double-left
         </v-icon>
         <v-icon v-else>
           mdi-chevron-double-right
         </v-icon>
-
       </v-btn>
 
       <v-toolbar-title
-        class="hidden-sm-and-down font-weight-light">
-        Dashboard
-      </v-toolbar-title>
+        class="hidden-sm-and-down font-weight-light text-capitalize"
+        v-text="$route.name.split('-').reverse()[0]" />
 
       <v-spacer />
+
+      <!--  Search bar -->
       <v-text-field
         hide-details
         style="max-width: 300px;"
         label="Search"
         clearable
       >
-        <template
-          v-slot:append-outer
-        >
+        <template v-slot:append-outer>
           <v-btn
             class="mt-n2"
             elevation="1"
@@ -51,8 +50,8 @@
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </template>
-
       </v-text-field>
+
       <v-spacer />
 
       <v-menu
@@ -61,7 +60,7 @@
         offset-y
         origin="top right"
       >
-        <template v-slot:activator>
+        <template v-slot:activator="{on}">
           <v-btn
             class="ml-2"
             rounded
@@ -88,7 +87,9 @@
         depressed
         rounded
         small
-        text>
+        text
+        @click.prevent="openAuthModal"
+      >
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
@@ -97,11 +98,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'DashboardCoreAppBar',
   data() {
     return {
-      navOpen: false,
       notifications: [
         'Mike John Responded to your email',
         'You have 5 new tasks',
@@ -113,9 +115,18 @@ export default {
   },
   props: {},
   methods: {
+    openAuthModal() {
+      this.$store.commit('setAuthModal', true);
+    },
     onClickNavBtn() {
-      this.$emit('toggle-navbar');
+      this.$store.commit('toggleDrawer');
+      console.log(this.navDrawer);
     }
+  },
+  computed: {
+    ...mapState({
+      navDrawer: 'navDrawer'
+    })
   }
 
 };
